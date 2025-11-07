@@ -34,7 +34,7 @@ export const useSignup = (): UseSignupReturn => {
         await updateProfile(res.user, { displayName });
 
         const userDoc = doc(projectFirestore, 'users', res.user.uid);
-        await setDoc(userDoc, {online: true, displayName });
+        await setDoc(userDoc, { online: true, displayName });
   
         dispatch({ type: 'LOGIN', payload: res.user });
   
