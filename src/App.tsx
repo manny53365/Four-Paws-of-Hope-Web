@@ -36,11 +36,11 @@ function App(): JSX.Element {
               />
               <Route
                 path="/dashboard"
-                element={!user ? <Dashboard /> : <Navigate to="/" replace />}
+                element={user ? <Dashboard /> : <Navigate to="/login" replace />}
               />
               <Route
                 path="/donation"
-                element={!user ? <Donation /> : <Navigate to="/" replace />}
+                element={user ? <Donation /> : <Navigate to="/login" replace />}
               />
             </Routes>
           </div>
