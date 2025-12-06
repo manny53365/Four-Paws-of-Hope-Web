@@ -5,12 +5,45 @@ export default function Signup() {
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [displayName, setDisplayName] = useState<string>('');
+    const [fName, setfName] = useState<string>('');
+    const [lName, setlName] = useState<string>('');
+    const [phone, setPhone] = useState<string>('')
+    const [address,setAddress] = useState<string>('')
+    const [pfp, setPfp] = useState<File | null>(null);
+    const [pfpError, setpfpError] = useState<string | null>(null);
     const {signup, isPending, error} = useSignup();
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement> )=> {
+        setPfp(null);
+        setpfpError(null);
+        const selectedImg = event.target.files?.[0] ?? null;
+        console.log(selectedImg);
+
+        if (!selectedImg){
+            setpfpError('Please select a file');
+            return;
+        };
+        if (!selectedImg.type.includes('image')){
+            setpfpError('Selected file must be an image');
+            return;
+        };
+        if (selectedImg.size > 1000000){
+            setpfpError('Image file size must be less than 100kb');
+            return;
+        };
+
+        setpfpError(null);
+        setPfp(selectedImg);
+        console.log('Thumbnail updated')
+    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        signup(email, password, displayName);
+        if (!pfp) {
+            setpfpError('Please upload a thumbnail before signing up')
+            return
+        }
+        signup(email, password, fName);
     }
     
     return (
@@ -35,12 +68,46 @@ export default function Signup() {
                 />
             </label>
             <label>
-                <span>Display Name:</span>
+                <span>First Name:</span>
                 <input
                 type="text"
                 required
-                onChange={event => setDisplayName(event.target.value)}
-                value={displayName}
+                onChange={event => setfName(event.target.value)}
+                value={fName}
+                />
+            </label>
+            <label>
+                <span>Last Name:</span>
+                <input
+                type="text"
+                required
+                onChange={event => setlName(event.target.value)}
+                value={lName}
+                />
+            </label>
+            <label>
+                <span>Phone Number:</span>
+                <input
+                type="text"
+                required
+                onChange={event => setPhone(event.target.value)}
+                value={phone}
+                />
+            </label>
+            <label>
+                <span>Physical Address:</span>
+                <input
+                type="text"
+                required
+                onChange={event => setAddress(event.target.value)}
+                value={address}
+                />
+            </label>
+            <label>
+                <span>Profile Photo:</span>
+                <input
+                type="file"
+                onChange={handleFileChange}
                 />
             </label>
             {!isPending && <button className='btn'>Sign up</button>}
