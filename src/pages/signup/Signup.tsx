@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
+import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
 
 export default function Signup() {
 
@@ -109,9 +112,11 @@ export default function Signup() {
                 type="file"
                 onChange={handleFileChange}
                 />
+                {pfpError && <div className='error'>{pfpError}</div>}
             </label>
-            {!isPending && <button className='btn'>Sign up</button>}
-            {isPending && <button className='btn' disabled>Loading</button>}
+            {!isPending && <Button variant="contained" startIcon={<Avatar src="/broken-image.jpg" />}>Sign Up</Button>}
+            <Box sx={{ '& > button': { m: 1 } }}><Button loading={isPending} variant="outlined" disabled>Disabled</Button></Box>
+            {/* {isPending && <button className='btn' disabled>Loading</button>} */}
             {error && <div className='error'>{error}</div>}
         </form>
     )

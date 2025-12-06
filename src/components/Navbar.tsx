@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useLogin } from '../hooks/useLogin';
+// import { useLogin } from '../hooks/useLogin';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -12,7 +12,7 @@ export default function Navbar() {
       <ul>
         {(
           <li className="logo">
-            <span>Project Validation</span>
+            <span>Four Paws Of Hope</span>
           </li>
         )}
 

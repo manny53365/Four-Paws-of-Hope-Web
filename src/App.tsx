@@ -13,20 +13,19 @@ function App(): JSX.Element {
   return (
     <div className="App">
       {authIsReady && (
-        <BrowserRouter>
-          <div className="container">
-            <Navbar />
-            <Routes>
-              <Route path="/" element={user ? <div>Home</div> : <Navigate to="/login" replace />}>
-              </Route>
-              <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />}>
-                {!user && <Login />}
-              </Route>
-              <Route path="/signup" element={ !user ? <Signup /> : <Navigate to='/login' replace/>}>
-              </Route>
-            </Routes>
-          </div>
-        </BrowserRouter>
+          <BrowserRouter>
+            <div className="container">
+              <Navbar />
+              <Routes>
+                <Route path="/" element={user ? <div>Home</div> : <Navigate to="/login" replace />}>
+                </Route>
+                <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />}>
+                </Route>
+                <Route path="/signup" element={ !user ? <Signup /> : <Navigate to='/login' replace/>}>
+                </Route>
+              </Routes>
+            </div>
+          </BrowserRouter>
       )}
     </div>
   );
