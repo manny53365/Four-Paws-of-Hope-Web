@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
 import Button from '@mui/material/Button';
-import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import TextField from '@mui/material/TextField';
+import { CloudUpload } from '@mui/icons-material';
 
 export default function Signup() {
 
@@ -52,70 +53,21 @@ export default function Signup() {
     return (
         <form className='auth-form' onSubmit={handleSubmit}>
             <h2>Sign Up</h2>
-            <label>
-                <span>Email:</span>
-                <input
-                type="email"
-                required
-                onChange={event => setEmail(event.target.value)}
-                value={email}
-                />
-            </label>
-            <label>
-                <span>Password:</span>
-                <input
-                type="password"
-                required
-                onChange={event => setPassword(event.target.value)}
-                value={password}
-                />
-            </label>
-            <label>
-                <span>First Name:</span>
-                <input
-                type="text"
-                required
-                onChange={event => setfName(event.target.value)}
-                value={fName}
-                />
-            </label>
-            <label>
-                <span>Last Name:</span>
-                <input
-                type="text"
-                required
-                onChange={event => setlName(event.target.value)}
-                value={lName}
-                />
-            </label>
-            <label>
-                <span>Phone Number:</span>
-                <input
-                type="text"
-                required
-                onChange={event => setPhone(event.target.value)}
-                value={phone}
-                />
-            </label>
-            <label>
-                <span>Physical Address:</span>
-                <input
-                type="text"
-                required
-                onChange={event => setAddress(event.target.value)}
-                value={address}
-                />
-            </label>
-            <label>
-                <span>Profile Photo:</span>
-                <input
-                type="file"
-                onChange={handleFileChange}
-                />
-                {pfpError && <div className='error'>{pfpError}</div>}
-            </label>
+            <TextField className='signUpBtn' required id="outlined-required" label="Email" type='email' value={email} onChange={e => setEmail(e?.target.value)} />
+            <TextField className='signUpBtn' required id="outlined-required" label="Password" type='password' value={password} onChange={e => setPassword(e?.target.value)} />
+            <TextField className='signUpBtn' required id="outlined-required" label="First Name" type='text' value={fName} onChange={e => setfName(e?.target.value)} />
+            <TextField className='signUpBtn' required id="outlined-required" label="Last Name" type='text' value={lName} onChange={e => setlName(e?.target.value)} />
+            <TextField className='signUpBtn' required id="outlined-required" label="Phone Number" type='tel' value={phone} onChange={e => setPhone(e?.target.value)} />
+            <TextField className='signUpBtn' required id="outlined-required" label="Physical Address" type='text' value={address} onChange={e => setAddress(e?.target.value)} />
+            <Button className='signUpBtn' component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<CloudUpload />}>
+                Set Profile Photo
+                <input type="file" hidden accept="image/*" onChange={handleFileChange} />
+            </Button>
+
+            {pfpError && <div className="error">{pfpError}</div>}
+
             {!isPending && <Button variant="contained" startIcon={<Avatar src="/broken-image.jpg" />}>Sign Up</Button>}
-            <Box sx={{ '& > button': { m: 1 } }}><Button loading={isPending} variant="outlined" disabled>Disabled</Button></Box>
+            {isPending && <Button loading={isPending} variant="outlined" disabled>Loading...</Button>}
             {/* {isPending && <button className='btn' disabled>Loading</button>} */}
             {error && <div className='error'>{error}</div>}
         </form>

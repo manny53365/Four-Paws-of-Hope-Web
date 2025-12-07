@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 function Login() {
 
     const [email, setEmail] = useState<string>('');
@@ -15,26 +18,10 @@ function Login() {
   return (
     <form className='auth-form' onSubmit={handleSubmit}>
             <h2>Log In</h2>
-            <label>
-                <span>Email:</span>
-                <input
-                type="email"
-                required
-                onChange={event => setEmail(event.target.value)}
-                value={email}
-                />
-            </label>
-            <label>
-                <span>Password:</span>
-                <input
-                type="password"
-                required
-                onChange={event => setPassword(event.target.value)}
-                value={password}
-                />
-            </label>
-            {!isPending && <button className='btn'>Sign in</button>}
-            {isPending && <button className='btn' disabled>Loading</button>}
+            <TextField className='signInBtn' required id="outlined-required" label="Email" type='email' value={email} onChange={e => setEmail(e?.target.value)} />
+            <TextField className='signInBtn' required id="outlined-required" label="Password" type='password' value={password} onChange={e => setPassword(e?.target.value)} />
+            {!isPending && <Button variant="contained">Sign In</Button>}
+            {isPending && <Button variant="contained" disabled >Loading</Button>}
             {error && <div className='error'>{error}</div>}
         </form>
   )
