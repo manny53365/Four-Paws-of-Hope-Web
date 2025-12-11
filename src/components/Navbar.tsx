@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
 
+import './Navbar.css'
+import { Button } from '@mui/material';
+import logo from '../assets/fpohLogo.png'
+
 export default function Navbar() {
   const { logout, isPending } = useLogout();
   const { user } = useAuthContext();
@@ -12,6 +16,7 @@ export default function Navbar() {
       <ul>
         {(
           <li className="logo">
+            <img src={logo} alt="Logo" />
             <span>Four Paws Of Hope</span>
           </li>
         )}
@@ -19,10 +24,10 @@ export default function Navbar() {
         {!user && (
           <>
             <li>
-              <Link to="/login">Login</Link>
+              <Button><Link to="/login">Login</Link></Button>
             </li>
             <li>
-              <Link to="/signup">Sign Up</Link>
+              <Button><Link to="/signup">Sign Up</Link></Button>
             </li>
           </>
         )}
