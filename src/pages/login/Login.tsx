@@ -32,10 +32,10 @@ function Login() {
                     <Grid size={12}>
                         {!isPending && <Button className='signUpBtn' startIcon={<LoginIcon />} variant="contained">Log In</Button>}
                         {isPending && <Button className='signUpBtn' loading={isPending} variant="outlined" disabled>Logging in...</Button>}
+                        {error && <div className='error'>{error}</div>}
                     </Grid>
                 </Grid>
             </Box>
-            {error && <div className='error'>{error}</div>}
         </form>
   )
 }
