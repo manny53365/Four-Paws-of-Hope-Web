@@ -8,15 +8,14 @@ import Grid from '@mui/material/Grid';
 import LoginIcon from '@mui/icons-material/Login';
 
 function Login() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { login, isPending, error } = useLogin();
 
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const {login, isPending, error} = useLogin();
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        await login(email, password);
-    }
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await login(email, password);
+  };
 
   return (
     <form className='auth-form' onSubmit={handleSubmit}>
@@ -40,4 +39,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login;

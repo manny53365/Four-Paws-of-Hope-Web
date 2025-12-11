@@ -26,7 +26,7 @@ export const useLogin = (): LoginReturn => {
       dispatch({ type: 'LOGIN', payload: res.user });
 
       const userDocRef = doc(projectFirestore, 'users', res.user.uid);
-      await updateDoc(userDocRef, {online: true});
+      await updateDoc(userDocRef, { online: true });
 
       if (!isCancelled) {
         setIsPending(false);

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useSignup } from '../../hooks/useSignup';
+import React, { useState } from "react";
+import { useSignup } from "../../hooks/useSignup";
 
 import './Signup.css';
 import Button from '@mui/material/Button';
@@ -10,6 +10,10 @@ import Grid from '@mui/material/Grid';
 import { HowToReg } from '@mui/icons-material';
 
 export default function Signup() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [displayName, setDisplayName] = useState<string>("");
+  const { signup, isPending, error } = useSignup();
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');

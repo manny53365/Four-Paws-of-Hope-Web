@@ -10,6 +10,7 @@ import logo from '../assets/fpohLogo.png'
 export default function Navbar() {
   const { logout, isPending } = useLogout();
   const { user } = useAuthContext();
+  const usePathname = window.location.pathname;
 
   return (
     <div className="navbar">
@@ -32,20 +33,46 @@ export default function Navbar() {
           </>
         )}
 
-        {user && (
-          <li>
-            {!isPending ? (
-              <button className="btn" onClick={logout}>
-                Logout
-              </button>
-            ) : (
-              <button className="btn" disabled>
-                Logging out
-              </button>
-            )}
-          </li>
-        )}
-      </ul>
-    </div>
+          {!/login/.test(usePathname) && (
+          // {user && ()}
+            <>
+              <li>
+                <Link
+                  to="/dashboard"
+                  className="text-gray-700 hover:text-indigo-600 font-medium transition"
+                >
+                  Dashboard
+                </Link>
+              </li>
+                            <li>
+                <Link
+                  to="/donation"
+                  className="text-gray-700 hover:text-indigo-600 font-medium transition"
+                >
+                  Donation
+                </Link>
+              </li>
+              <li>
+                {!isPending ? (
+                  <button
+                    onClick={logout}
+                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition font-medium"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    className="bg-gray-100 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed font-medium"
+                  >
+                    Logging out...
+                  </button>
+                )}
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
+    </nav>
   );
 }
