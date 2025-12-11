@@ -1,0 +1,33 @@
+.navbar {
+  width: 100%;
+  padding: 10px 0;
+  box-sizing: border-box;
+  margin-bottom: 80px;
+  height: 50px;
+}
+.navbar ul {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  list-style-type: none;
+}
+.navbar .logo {
+  font-weight: bold;
+  color: var(--heading-color);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+.navbar .logo img {
+  margin-right: 10px;
+  width: 200px;
+  margin-top: -8px;
+  border-radius: 50%;
+}
+.navbar a {
+  color: #333;
+  text-decoration: none;
+  text-align: center;
+}

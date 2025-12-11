@@ -18,33 +18,19 @@ function App(): JSX.Element {
   return (
     <div className="App">
       {authIsReady && (
-        <BrowserRouter>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <Routes>
-              <Route
-                path="/"
-                element={user ? <div>Home</div> : <Navigate to="/login" replace />}
-              />
-              <Route
-                path="/login"
-                element={user ? <Navigate to="/" replace /> : <Login />}
-              />
-              <Route
-                path="/signup"
-                element={!user ? <Signup /> : <Navigate to="/" replace />}
-              />
-              <Route
-                path="/dashboard"
-                element={user ? <Dashboard /> : <Navigate to="/login" replace />}
-              />
-              <Route
-                path="/donation"
-                element={user ? <Donation /> : <Navigate to="/login" replace />}
-              />
-            </Routes>
-          </div>
-        </BrowserRouter>
+          <BrowserRouter>
+            <div className="container">
+              <Navbar />
+              <Routes>
+                <Route path="/" element={user ? <div>Home</div> : <Navigate to="/login" replace />}>
+                </Route>
+                <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />}>
+                </Route>
+                <Route path="/signup" element={ !user ? <Signup /> : <Navigate to='/login' replace/>}>
+                </Route>
+              </Routes>
+            </div>
+          </BrowserRouter>
       )}
     </div>
   );

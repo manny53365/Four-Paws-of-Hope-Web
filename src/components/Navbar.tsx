@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
-import { useAuthContext } from "../hooks/useAuthContext"; 
-//I have changed the navbar logic but left the original code commented out for the next person to review.
-//I have said where I made changes in the App.tsx file.
+import { Link } from 'react-router-dom';
+// import { useLogin } from '../hooks/useLogin';
+import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
+
+import './Navbar.css'
+import { Button } from '@mui/material';
+import logo from '../assets/fpohLogo.png'
 
 export default function Navbar() {
   const { logout, isPending } = useLogout();
@@ -10,36 +13,25 @@ export default function Navbar() {
   const usePathname = window.location.pathname;
 
   return (
-    <nav className="bg-white shadow-md border-b border-gray-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-xl font-semibold text-blue-600 tracking-tight">
-            Four Paws of Hope
-          </span>
-        </Link>
+    <div className="navbar">
+      <ul>
+        {(
+          <li className="logo">
+            <img src={logo} alt="Logo" />
+            <span>Four Paws Of Hope</span>
+          </li>
+        )}
 
-        <ul className="flex items-center space-x-6">
-          {/login/.test(usePathname) && (
-          // {!user && (}
-            <>
-              <li>
-                <Link
-                  to="/login"
-                  className="text-gray-700 hover:text-indigo-600 font-medium transition"
-                >
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/signup"
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition font-medium"
-                >
-                  Sign Up
-                </Link>
-              </li>
-            </>
-          )}
+        {!user && (
+          <>
+            <li>
+              <Button><Link to="/login">Login</Link></Button>
+            </li>
+            <li>
+              <Button><Link to="/signup">Sign Up</Link></Button>
+            </li>
+          </>
+        )}
 
           {!/login/.test(usePathname) && (
           // {user && ()}

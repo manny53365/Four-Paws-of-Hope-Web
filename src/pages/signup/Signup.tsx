@@ -1,101 +1,101 @@
 import React, { useState } from "react";
 import { useSignup } from "../../hooks/useSignup";
 
+import './Signup.css';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { CloudUpload } from '@mui/icons-material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { HowToReg } from '@mui/icons-material';
+
 export default function Signup() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [displayName, setDisplayName] = useState<string>("");
   const { signup, isPending, error } = useSignup();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    signup(email, password, displayName);
-  };
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [displayName, setDisplayName] = useState<string>('');
+    const [fName, setfName] = useState<string>('');
+    const [lName, setlName] = useState<string>('');
+    const [phone, setPhone] = useState<string>('')
+    const [address,setAddress] = useState<string>('')
+    const [pfp, setPfp] = useState<File | null>(null);
+    const [pfpError, setpfpError] = useState<string | null>(null);
+    const {signup, isPending, error} = useSignup();
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-50">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg rounded-2xl px-8 py-10 w-full max-w-md border border-gray-100"
-      >
-        <h2 className="text-3xl font-semibold text-gray-800 text-center mb-6">
-          Create Your Account 🐾
-        </h2>
-        <p className="text-gray-500 text-center mb-8">
-          Join our community and start helping pets in need
-        </p>
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement> )=> {
+        setPfp(null);
+        setpfpError(null);
+        const selectedImg = event.target.files?.[0] ?? null;
+        console.log(selectedImg);
 
-        <div className="mb-5">
-          <label className="block text-gray-700 font-medium mb-2">Email</label>
-          <input
-            type="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
-            placeholder="you@example.com"
-          />
-        </div>
+        if (!selectedImg){
+            setpfpError('Please select a file');
+            return;
+        };
+        if (!selectedImg.type.includes('image')){
+            setpfpError('Selected file must be an image');
+            return;
+        };
+        if (selectedImg.size > 5 * 1024 * 1024) {
+            setpfpError('Image file size must be less than 5MB');
+            return;
+        }
 
-        <div className="mb-5">
-          <label className="block text-gray-700 font-medium mb-2">Password</label>
-          <input
-            type="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
-            placeholder="••••••••"
-          />
-        </div>
+        setpfpError(null);
+        setPfp(selectedImg);
+        console.log('Thumbnail updated')
+    }
 
-        <div className="mb-6">
-          <label className="block text-gray-700 font-medium mb-2">
-            Display Name
-          </label>
-          <input
-            type="text"
-            required
-            onChange={(e) => setDisplayName(e.target.value)}
-            value={displayName}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
-            placeholder="John Doe"
-          />
-        </div>
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        signup({ email, password, displayName, fName, lName, phone, address, pfp });
+    }
+    
+    return (
+        <form className='auth-form' onSubmit={handleSubmit}>
 
-        {!isPending && (
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition transform hover:-translate-y-0.5"
-          >
-            Sign Up
-          </button>
-        )}
-        {isPending && (
-          <button
-            disabled
-            className="w-full bg-gray-300 text-gray-600 py-2.5 rounded-lg font-medium cursor-not-allowed"
-          >
-            Loading...
-          </button>
-        )}
-
-        {error && (
-          <div className="mt-4 text-red-600 text-sm text-center bg-red-50 py-2 rounded-lg border border-red-200">
-            {error}
-          </div>
-        )}
-
-        <p className="mt-8 text-sm text-gray-500 text-center">
-          Already have an account?{" "}
-          <a
-            href="/login"
-            className="text-indigo-600 font-medium hover:underline"
-          >
-            Log in
-          </a>
-        </p>
-      </form>
-    </div>
-  );
-}
+            <h2>Sign Up</h2>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid size={6}>
+                        <TextField className='signUp' required id="outlined-required" label="Email" type='email' value={email} onChange={e => setEmail(e?.target.value)} />
+                    </Grid>
+                    <Grid size={6}>
+                        <TextField className='signUp' required id="outlined-required" label="Password" type='password' value={password} onChange={e => setPassword(e?.target.value)} />
+                    </Grid>
+                    <Grid size={6}>
+                        <TextField className='signUp' required id="outlined-required" label="Display Name" type='text' value={password} onChange={e => setDisplayName(e?.target.value)} />
+                    </Grid>
+                    <Grid size={6}>
+                        <TextField className='signUp' required id="outlined-required" label="First Name" type='text' value={fName} onChange={e => setfName(e?.target.value)} />
+                    </Grid>
+                    <Grid size={6}>
+                        <TextField className='signUp' required id="outlined-required" label="Last Name" type='text' value={lName} onChange={e => setlName(e?.target.value)} />
+                    </Grid>
+                    <Grid size={6}>
+                        <TextField className='signUp' required id="outlined-required" label="Phone Number" type='tel' value={phone} onChange={e => setPhone(e?.target.value)} />
+                    </Grid>
+                    <Grid size={12}>
+                        <TextField className='signUpBtn address' required id="outlined-required" label="Physical Address" type='text' value={address} placeholder='Street, City, State, Postal Code' onChange={e => setAddress(e?.target.value)} />
+                    </Grid>
+                    <Grid size={12}>
+                        <Button className='signUpBtn' component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<CloudUpload />}>
+                            Set Profile Photo
+                            <input type="file" hidden accept="image/*" onChange={handleFileChange} />
+                        </Button>
+                    </Grid>
+                    <Grid size={12}>
+                        {!isPending && <Button className='signUpBtn' startIcon={<HowToReg />} variant="contained">Sign Up</Button>}
+                        {isPending && <Button className='signUpBtn' loading={isPending} variant="outlined" disabled>Loading...</Button>}
+                        {pfpError && <div className="error">{pfpError}</div>}
+                    </Grid>
+                </Grid>
+            </Box>
+            {error && <div className='error'>{error}</div>}
+        </form>
+    )
+};
