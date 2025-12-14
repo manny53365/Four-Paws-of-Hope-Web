@@ -84,7 +84,7 @@ export default function Signup() {
                         </Button>
                     </Grid>
                     <Grid size={12}>
-                        {!isPending && <Button className='signUpBtn' startIcon={<HowToReg />} variant="contained">Sign Up</Button>}
+                        {!isPending && <Button className='signUpBtn' startIcon={<HowToReg />} variant="contained" type="submit">Sign Up</Button>}
                         {isPending && <Button className='signUpBtn' loading={isPending} variant="outlined" disabled>Loading...</Button>}
                         {pfpError && <div className="error">{pfpError}</div>}
                     </Grid>
