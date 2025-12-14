@@ -10,11 +10,6 @@ import Grid from '@mui/material/Grid';
 import { HowToReg } from '@mui/icons-material';
 
 export default function Signup() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [displayName, setDisplayName] = useState<string>("");
-  const { signup, isPending, error } = useSignup();
-
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [displayName, setDisplayName] = useState<string>('');
