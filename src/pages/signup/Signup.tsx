@@ -63,7 +63,7 @@ export default function Signup() {
                         <TextField className='signUp' required id="outlined-required" label="Password" type='password' value={password} onChange={e => setPassword(e?.target.value)} />
                     </Grid>
                     <Grid size={6}>
-                        <TextField className='signUp' required id="outlined-required" label="Display Name" type='text' value={password} onChange={e => setDisplayName(e?.target.value)} />
+                        <TextField className='signUp' required id="outlined-required" label="Display Name" type='text' value={displayName} onChange={e => setDisplayName(e?.target.value)} />
                     </Grid>
                     <Grid size={6}>
                         <TextField className='signUp' required id="outlined-required" label="First Name" type='text' value={fName} onChange={e => setfName(e?.target.value)} />
