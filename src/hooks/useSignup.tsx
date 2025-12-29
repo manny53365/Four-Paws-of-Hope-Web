@@ -42,10 +42,6 @@ const signup = async ({
   setIsPending(true)
 
   try {
-    if (!pfp) {
-      throw new Error('Profile picture is required')
-    }
-
     // Create user
     const res: UserCredential = await createUserWithEmailAndPassword(projectAuth, email, password)
 
@@ -53,14 +49,22 @@ const signup = async ({
       throw new Error('Could not complete signup')
     }
 
-    // Upload profile picture to Storage
-    const uploadPath = `profilePictures/${res.user.uid}/${pfp.name}`
-    const imgRef = ref(projectStorage, uploadPath)
-    await uploadBytes(imgRef, pfp)
-    const photoURL = await getDownloadURL(imgRef)
+    // Optional profile picture
+    let uploadPath: string | null = null
+    let photoURL: string | null = null
 
-    // Update user profile with displayName + photoURL
-    await updateProfile(res.user, { displayName, photoURL })
+    if (pfp) {
+      uploadPath = `profilePictures/${res.user.uid}/${pfp.name}`
+      const imgRef = ref(projectStorage, uploadPath)
+      await uploadBytes(imgRef, pfp)
+      photoURL = await getDownloadURL(imgRef)
+    }
+
+    // Update user profile with displayName (and photoURL if present)
+    await updateProfile(res.user, {
+      displayName,
+      ...(photoURL ? { photoURL } : {}),
+    })
 
     // Create Firestore doc for this user
     const userDoc = doc(projectFirestore, 'users', res.user.uid)
@@ -71,8 +75,8 @@ const signup = async ({
       lName,
       phone,
       address,
-      photoURL,   // pfp url for display purposes
-      uploadPath, // we can delete/edit pfp at any time
+      photoURL: photoURL ?? null,   // pfp url for display purposes
+      uploadPath: uploadPath ?? null, // we can delete/edit pfp at any time
     })
 
     // Update context

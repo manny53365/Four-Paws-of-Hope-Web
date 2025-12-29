@@ -28,7 +28,7 @@ export default function Signup() {
         console.log(selectedImg);
 
         if (!selectedImg){
-            setpfpError('Please select a file');
+            setpfpError(null);
             return;
         };
         if (!selectedImg.type.includes('image')){
@@ -45,9 +45,10 @@ export default function Signup() {
         console.log('Thumbnail updated')
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
-        signup({ email, password, displayName, fName, lName, phone, address, pfp });
+        if (pfpError) return;
+        await signup({ email, password, displayName, fName, lName, phone, address, pfp });
     }
     
     return (
