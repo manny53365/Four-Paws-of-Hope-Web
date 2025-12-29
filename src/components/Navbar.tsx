@@ -25,12 +25,6 @@ export default function Navbar() {
         {!user && (
           <>
             <li>
-              <Button><Link to="/dashboard">Dashboard</Link></Button>
-            </li>
-            <li>
-              <Button><Link to="/donation">Donation</Link></Button>
-            </li>
-            <li>
               <Button><Link to="/login">Login</Link></Button>
             </li>
             <li>
@@ -41,10 +35,13 @@ export default function Navbar() {
         {user && (
           <>
             <li>
-              <Button><Link to="/login" onClick={logout}>Logout</Link></Button>
+              <Button><Link to="/dashboard">Dashboard</Link></Button>
             </li>
             <li>
               <Button><Link to="/donation">Donation</Link></Button>
+            </li>
+            <li>
+              <Button><Link to="/login" onClick={logout}>Logout</Link></Button>
             </li>
           </>
         )}

@@ -22,11 +22,13 @@ function App(): JSX.Element {
             <div className="container">
               <Navbar />
               <Routes>
-                <Route path="/" element={user ? <div>Home</div> : <Navigate to="/login" replace />}>
+                <Route path="/" element={user ? <Dashboard/> : <Login />}>
                 </Route>
-                <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />}>
+                <Route path="/login" element={user ? <Dashboard /> : <Login />}>
                 </Route>
-                <Route path="/signup" element={ !user ? <Signup /> : <Navigate to='/login' replace/>}>
+                <Route path="/signup" element={ !user ? <Signup /> : <Dashboard/>}>
+                </Route>
+                <Route path="/donation" element={ !user ? <Login /> : <Donation />}>
                 </Route>
               </Routes>
             </div>
