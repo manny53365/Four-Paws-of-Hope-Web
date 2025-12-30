@@ -26,9 +26,9 @@ function App(): JSX.Element {
                 </Route>
                 <Route path="/login" element={user ? <Navigate to='/' replace /> : <Login />}>
                 </Route>
-                <Route path="/signup" element={ !user ? <Signup /> : <Dashboard/>}>
+                <Route path="/signup" element={ user ? <Navigate to='/' replace /> : <Signup/>}>
                 </Route>
-                <Route path="/donation" element={ !user ? <Login /> : <Donation />}>
+                <Route path="/donation" element={ user ? <Donation /> : <Login />}>
                 </Route>
               </Routes>
             </div>
