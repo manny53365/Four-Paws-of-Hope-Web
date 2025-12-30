@@ -5,7 +5,7 @@ import Signup from "./pages/signup/Signup";
 import Dashboard from "./pages/dashboard/dashboard";
 import Navbar from "./components/Navbar";
 import Donation from "./pages/donation/donation";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 //I have changed the routing logic because I couldn't register 
 //The next person should change it back later on to prevent non-authenticated users from accessing protected routes.

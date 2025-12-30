@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { projectAuth, projectFirestore } from '../firebase/config';
 import { useAuthContext } from './useAuthContext';
 
@@ -11,7 +11,7 @@ type LoginReturn = {
 };
 
 export const useLogin = (): LoginReturn => {
-  const [isCancelled, setIsCancelled] = useState(false);
+  const cancelledRef = useRef(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
   const { dispatch } = useAuthContext();
@@ -26,25 +26,29 @@ export const useLogin = (): LoginReturn => {
       dispatch({ type: 'LOGIN', payload: res.user });
 
       const userDocRef = doc(projectFirestore, 'users', res.user.uid);
-      await updateDoc(userDocRef, { online: true });
-
-      if (!isCancelled) {
-        setIsPending(false);
-        setError(null);
-      };
+      await setDoc(userDocRef, { online: true });
 
     } 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     catch(err: any) {
-      if (!isCancelled) {
-        setError(err.message || 'An error occurred');
+      const cleanMessage = err?.code ? err.code.replace('auth/', '').replace(/-/g, ' '): 'Login failed';
+
+      if (!cancelledRef.current){
+        setError(cleanMessage.toUpperCase())
+      }
+      // setError(cleanMessage.toUpperCase());
+    } finally {
+      if (!cancelledRef.current){
         setIsPending(false);
-      };
+      }
     };
   };
 
   useEffect(() => {
-    return () => setIsCancelled(true);
+    cancelledRef.current = false;
+    return () => {
+      cancelledRef.current = true;
+    };
   }, []);
 
   return { login, isPending, error }

@@ -6,13 +6,14 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LoginIcon from '@mui/icons-material/Login';
+import Alert from '@mui/material/Alert';
 
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { login, isPending, error } = useLogin();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     await login(email, password);
   };
@@ -31,7 +32,11 @@ function Login() {
                     <Grid size={12}>
                         {!isPending && <Button className='signUpBtn' startIcon={<LoginIcon />} variant="contained" type="submit">Log In</Button>}
                         {isPending && <Button className='signUpBtn' loading={isPending} variant="outlined" disabled>Logging in...</Button>}
-                        {error && <div className='error'>{error}</div>}
+                        {error && (
+                          <Alert severity="error" sx={{ mt: 2 }} role="alert" aria-live="polite">
+                            {typeof error === 'string' ? error : String(error)}
+                          </Alert>
+                        )}
                     </Grid>
                 </Grid>
             </Box>
