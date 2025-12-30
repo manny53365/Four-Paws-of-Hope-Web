@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { projectAuth, projectFirestore } from '../firebase/config';
 import { useAuthContext } from './useAuthContext';
 
@@ -26,7 +26,7 @@ export const useLogin = (): LoginReturn => {
       dispatch({ type: 'LOGIN', payload: res.user });
 
       const userDocRef = doc(projectFirestore, 'users', res.user.uid);
-      await setDoc(userDocRef, { online: true });
+      await updateDoc(userDocRef, { online: true });
 
     } 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
