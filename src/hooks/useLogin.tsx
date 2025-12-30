@@ -36,7 +36,6 @@ export const useLogin = (): LoginReturn => {
       if (!cancelledRef.current){
         setError(cleanMessage.toUpperCase())
       }
-      // setError(cleanMessage.toUpperCase());
     } finally {
       if (!cancelledRef.current){
         setIsPending(false);
