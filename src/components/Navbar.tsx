@@ -8,9 +8,8 @@ import { Button } from '@mui/material';
 import logo from '../assets/fpohLogo.png'
 
 export default function Navbar() {
-  const { logout, isPending } = useLogout();
+  const { logout } = useLogout();
   const { user } = useAuthContext();
-  // const usePathname = window.location.pathname;
 
   return (
     <div className="navbar">
@@ -18,7 +17,6 @@ export default function Navbar() {
         {(
           <li className="logo">
             <img src={logo} alt="Logo" />
-            {/* <span>Four Paws Of Hope</span> */}
           </li>
         )}
 
@@ -35,7 +33,7 @@ export default function Navbar() {
         {user && (
           <>
             <li>
-              <Button><Link to="/dashboard">Dashboard</Link></Button>
+              <Button><Link to="/">Dashboard</Link></Button>
             </li>
             <li>
               <Button><Link to="/donation">Donation</Link></Button>
