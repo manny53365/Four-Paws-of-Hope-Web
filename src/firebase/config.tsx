@@ -18,7 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize services
-const projectFirestore = getFirestore(app);
+const projectFirestore = getFirestore(app, 'fpoh1');
 const projectAuth = getAuth(app);
 const projectStorage = getStorage(app);
 const timestamp = Timestamp;
