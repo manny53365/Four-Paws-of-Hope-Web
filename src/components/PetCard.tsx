@@ -4,7 +4,6 @@ interface PetCardProps {
     breed: string;
     location: string;
     description: string;
-    status: "Lost" | "Found";
     image: string;
   };
 }
@@ -15,9 +14,6 @@ export default function PetCard({ Pet }: PetCardProps) {
       <div className="p-4 flex flex-col flex-grow">
         <div className="flex justify-between items-start">
           <h4 className="text-lg font-bold text-secondary dark:text-white">{Pet.name}</h4>
-          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${Pet.status === 'Lost' ? 'bg-red-500' : 'bg-green-500'} text-white`}>
-            {Pet.status}
-          </span>
         </div>
         <div className="flex items-center gap-2 text-sm text-text-light/70 dark:text-text-dark/70 mt-1">
           <span>{Pet.breed}</span>

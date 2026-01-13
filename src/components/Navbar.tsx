@@ -39,6 +39,9 @@ export default function Navbar() {
               <Button><Link to="/donation">Donation</Link></Button>
             </li>
             <li>
+              <Button><Link to="/report">Report Lost Pet</Link></Button>
+            </li>
+            <li>
               <Button><Link to="/login" onClick={logout}>Logout</Link></Button>
             </li>
           </>

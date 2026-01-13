@@ -1,4 +1,3 @@
-//Additional filtering could be added if needed
 // I have used lucide react for icons but you can change the library
 import { Search, ArrowDown } from "lucide-react";
 export default function Filters() {
@@ -43,7 +42,7 @@ export default function Filters() {
           <span className="material-symbols-outlined group-open:rotate-180 transition-transform"><ArrowDown className="w-4 h-4" /></span>
         </summary>
         <div className="flex flex-col gap-3 pt-2">
-          {["Dog","Cat","Bird","Other"].map(type => (
+          {["Dog","Cat","Bird","Reptile","Equine","Other"].map(type => (
             <label key={type} className="flex items-center gap-3 p-2">
               <input type="checkbox" className="h-5 w-5 rounded border-border-light dark:border-text-dark/50 text-primary focus:ring-primary/50 bg-transparent" defaultChecked={type === "Cat"} />
               <p className="text-sm font-medium leading-normal">{type}</p>

@@ -5,12 +5,9 @@ import Signup from "./pages/signup/Signup";
 import Dashboard from "./pages/dashboard/dashboard";
 import Navbar from "./components/Navbar";
 import Donation from "./pages/donation/donation";
+import Report from "./pages/report/Report";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
-//I have changed the routing logic because I couldn't register 
-//The next person should change it back later on to prevent non-authenticated users from accessing protected routes.
-//I also added tailwind styling to login and register pages but did not change the logic of them.
-//also check the navbar for changes.
 
 function App(): JSX.Element {
   const { user, authIsReady } = useAuthContext();
@@ -30,6 +27,7 @@ function App(): JSX.Element {
                 </Route>
                 <Route path="/donation" element={ user ? <Donation /> : <Login />}>
                 </Route>
+                <Route path="/report" element={ user ? <Report /> : <Login />}></Route>
               </Routes>
             </div>
           </BrowserRouter>
