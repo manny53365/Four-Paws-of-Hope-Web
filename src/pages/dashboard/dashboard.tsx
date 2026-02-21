@@ -1,41 +1,71 @@
 import Filters from "../../components/Filters";
 import PetCard from "../../components/PetCard";
+import EditPetModal from "../../components/EditPetModal"
 import Pagination from "../../components/Pagination";
-
-const mockPets = [
-  {
-    id: 1,
-    name: "Buddy",
-    status: "Lost" as "Lost" | "Found",
-    breed: "Golden Retriever",
-    location: "San Francisco, CA",
-    description: "Buddy went missing near Golden Gate Park. He's very friendly and has a blue collar.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCmxtJRd6YRiGYHcIlc7sCvI3i2p83L1Kqf3LyKjAR3e9VyAiMaCnBe6zTJB-EigKjAG3-xmxx2__8-l_xWo6FQ-VF8bx4lRvaZqt9abBP9IU-CiqlSSenG66CLkEGD-kETnxJAHOdgRBrtc2pKBH7dz7oGKsD-0vQe_7zHoGHNlnJfMDznkGa6ZZis9mbT90g5a20_zfG6d7rEm6onHX-c3y-oL8ERIyG0xovag9gug4ONV-aYt4HX_ziZHhzSrvPn_YI_GuFpNFk"
-  },
-  {
-    id: 2,
-    name: "Whiskers",
-    status: "Found" as "Lost" | "Found",
-    breed: "Tabby Cat",
-    location: "Oakland, CA",
-    description: "Found this sweet cat in my backyard. No collar, but seems well-cared for. Very vocal.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBuMc4R2mUDp0tTGFKgCzDJnRYEEQGDZmKFbGx6-1G0zqkhMuBFRXAPSCdseujSiBsqQrmgD1eXnqAO3eXQEjkCFGfQQhnqiZ0RBgQkU8_HWSz1cabeym579X_hAOY4-F729WRUN3rJ0WXmljjyGZcr7FYynOTEhKyj4a2e4_FxSpdmD-ThVtAw-SoqqDGIgfeTcUn0212YWP3Cl9uTPr9QwHgn5hmoayufAalNIGZRFCwwYIqHN-1u1UrXxYS_YPPXQlvLVFPyHQI"
-  }
-];
+import { Pet, usePets } from "../../hooks/usePets";
+import { usePetFilters } from "../../hooks/usePetFilters"
+import { useState } from "react";
 
 export default function Dashboard() {
+  const { pets, loading, error } = usePets();
+  const {
+    search, setSearch,
+    statuses, toggleStatus,
+    animalTypes, toggleAnimalType,
+    filteredPets,
+    allStatuses, allTypes,
+  } = usePetFilters(pets)
+  const [editingPet, setEditingPet] = useState<Pet | null>(null)
+
+    if (loading) {
+    return (
+      <div className="w-full py-20 text-center text-gray-500">
+        Loading pets...
+      </div>
+    );
+    
+  }
+  if (error) {
+  return (
+    <div className="w-full py-20 text-center text-red-500">
+      Failed to load pets: <span className="font-medium">{error}</span>
+    </div>
+  );
+  }
   return (
     <main className="w-full mx-auto container px-4 sm:px-6 lg:px-10 py-8 grid grid-cols-12 gap-8">
       <aside className="col-span-12 lg:col-span-3">
-        <Filters />
+        <Filters
+          search={search}
+          onSearchChange={setSearch}
+          statuses={statuses}
+          onToggleStatus={toggleStatus}
+          animalTypes={animalTypes}
+          onToggleAnimalType={toggleAnimalType}
+          allStatuses={allStatuses}
+          allTypes={allTypes}
+        />
       </aside>
 
       <section className="col-span-12 lg:col-span-6 flex flex-col gap-6">
+        {filteredPets.length === 0 && (
+          <p className="text-center text-gray-500">
+            {pets.length === 0 ? "No pets reported yet." : "No pets match your filters."}
+          </p>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {mockPets.map(Pet => <PetCard key={Pet.id} Pet={Pet} />)}
+          {filteredPets.map(pet => (
+            <PetCard key={pet.id} pet={pet} onEdit={setEditingPet} />
+          ))}
         </div>
+
+        {editingPet && (
+          <EditPetModal pet={editingPet} onClose={() => setEditingPet(null)} />
+        )}
+
         <Pagination />
       </section>
     </main>
-  );
+  )
 }

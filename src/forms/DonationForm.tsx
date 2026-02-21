@@ -4,6 +4,9 @@ import React, { useState } from "react";
 const DonationForm: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
+  const inputStyle =
+    "mt-1 block w-full max-w-full box-border rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm p-3 dark:text-white";
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
@@ -20,11 +23,11 @@ const DonationForm: React.FC = () => {
 
   return (
     <section className="flex flex-col items-center px-4 w-full">
-      <div className="w-full max-w-2xl bg-white dark:bg-background-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 md:p-8">
+      <div className="w-full max-w-2xl bg-white dark:bg-background-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 md:p-8 overflow-hidden">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
           Secure Donation
         </h2>
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="p-0 space-y-6 w-full" onSubmit={handleSubmit}>
           <div>
             <h3 className="text-lg font-semibold mb-4 text-primary text-black dark:text-gray-300">
               Personal Information
@@ -33,19 +36,19 @@ const DonationForm: React.FC = () => {
               <input
                 type="text"
                 placeholder="First Name"
-                className="mt-1 block w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-500 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm p-2 dark:text-gray-100"
+                className={inputStyle}
                 required
               />
               <input
                 type="text"
                 placeholder="Last Name"
-                className="mt-1 block w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-500 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm p-2 dark:text-gray-100"
+                className={inputStyle}
                 required
               />
               <input
                 type="email"
                 placeholder="Email Address"
-                className="sm:col-span-2 mt-1 block w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-500 shadow-sm focus:border-secondary focus:ring-secondary sm:text-sm p-2 dark:text-gray-100"
+                className={`sm:col-span-2 ${inputStyle}`}
                 required
               />
             </div>

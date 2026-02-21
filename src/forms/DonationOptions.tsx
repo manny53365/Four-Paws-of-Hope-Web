@@ -28,7 +28,7 @@ const DonationOptions: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex justify-center flex-wrap gap-3 px-4 py-3 max-w-lg">
+        <div className="flex justify-center flex-wrap gap-3 px-4 py-3">
           {["$10","$25", "$50", "$100", "Other"].map((amt, i) => (
             <button
               key={i}
