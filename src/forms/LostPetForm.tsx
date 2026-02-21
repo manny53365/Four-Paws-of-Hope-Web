@@ -11,31 +11,23 @@ const LostPetForm: React.FC = () => {
     breed: "",
     location: "",
     description: "",
-    image: ""
   });
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    ) => {
+  ) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
-    };
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      await createPet({
-        name: form.name,
-        animalType: form.animalType,
-        breed: form.breed,
-        location: form.location,
-        description: form.description,
-        image: ""
-      });
-
+      await createPet({ ...form, image: "" });
       setSubmitted(true);
     } catch (err) {
       console.error(err);
+      window.alert("Failed to submit your lost pet report. Please check your information and try again.");
     }
   };
 
@@ -54,15 +46,12 @@ const LostPetForm: React.FC = () => {
   return (
     <section className="flex flex-col items-center px-4 w-full">
       <div className="w-full max-w-2xl bg-white dark:bg-background-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 md:p-8 overflow-hidden">
-
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
           Report a Lost Pet
         </h2>
 
         <form className="p-0 space-y-6 w-full" onSubmit={handleSubmit}>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 min-w-0">
-
             <input
               type="text"
               name="name"
@@ -74,8 +63,8 @@ const LostPetForm: React.FC = () => {
             />
 
             <select
+              name="animalType"
               className={inputStyle}
-                name="animalType"
               value={form.animalType}
               onChange={handleChange}
               required
@@ -91,7 +80,7 @@ const LostPetForm: React.FC = () => {
 
             <input
               type="text"
-                name="breed"
+              name="breed"
               placeholder="Breed"
               value={form.breed}
               className={inputStyle}
@@ -101,7 +90,7 @@ const LostPetForm: React.FC = () => {
 
             <input
               type="text"
-                name="location"
+              name="location"
               placeholder="Last Seen Location"
               value={form.location}
               className={`sm:col-span-2 ${inputStyle}`}
@@ -110,29 +99,25 @@ const LostPetForm: React.FC = () => {
             />
 
             <textarea
+              name="description"
               placeholder="Describe your pet (color, size, special marks...)"
               className={`sm:col-span-2 ${inputStyle} h-28 resize-none`}
               value={form.description}
-                name="description"
               onChange={handleChange}
               required
             />
-            <div className="sm:col-span-2 w-full min-w-0">
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                className={`${inputStyle} file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-yellow-600 file:text-white`}
-                onChange={handleChange}
-              />
-            </div>
 
+            <p className="sm:col-span-2 text-sm text-gray-500 dark:text-gray-400 italic">
+              Photo uploads are not yet available — this feature is coming soon.
+            </p>
           </div>
 
-          <button className="w-full flex items-center justify-center rounded-lg h-12 px-5 bg-yellow-600 hover:bg-yellow-700 text-white font-bold">
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center rounded-lg h-12 px-5 bg-yellow-600 hover:bg-yellow-700 text-white font-bold"
+          >
             Report Lost Pet
           </button>
-
         </form>
       </div>
     </section>
